@@ -1,0 +1,7 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- take picture, should appear as action button -->
+    <item android:id="@+id/action_camera"
+        android:icon="@drawable/ic_action_camera"
+        android:title="@string/action_camera"
+        android:showAsAction="always"/>
+</menu>
