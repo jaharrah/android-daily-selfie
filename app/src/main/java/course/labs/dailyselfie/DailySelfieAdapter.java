@@ -2,6 +2,7 @@ package course.labs.dailyselfie;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +93,24 @@ public class DailySelfieAdapter extends BaseAdapter {
             // Inflate the View for this ToDoItem from todo_item.xml.
             convertView = LayoutInflater.from(mContext).inflate(R.layout.daily_selfie_item, parent, false);
 
+            /*
+            convertView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+
+                    // Create an intent stating which Activity you would like to start
+                    Intent intent = new Intent(mContext, PreviewImageActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra(PreviewImageActivity.IMAGE_PATH, dailySelfieItem.getFullPhotoPath());
+
+                    // Use the Intent to start Google Maps application using Activity.startActivity()
+                    mContext.startActivity(intent);
+
+                }
+            });
+            */
+
             viewHolder = new ViewHolder();
             viewHolder.imageName = (TextView) convertView.findViewById(R.id.imageName);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
@@ -109,7 +129,6 @@ public class DailySelfieAdapter extends BaseAdapter {
 
         // Populate ImageView with scaled bitmap from full photo path
         setPic(viewHolder.imageView, dailySelfieItem.getFullPhotoPath());
-        //viewHolder.filePath.setText(dailySelfieItem.getFullPhotoPath());
 
         // Display Image Name in TextView
         viewHolder.imageName.setText(dailySelfieItem.getImageFileName());

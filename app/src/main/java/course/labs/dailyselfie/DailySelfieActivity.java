@@ -74,8 +74,12 @@ public class DailySelfieActivity extends ListActivity {
 
     private File createImageFile() throws IOException {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "SELFIE_JPEG_" + timeStamp + "_";
+        Date now = new Date();
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(now);
+        // todo: store name as simple value for sorting purposes, and prettify
+        // todo: on list item display
+        String prettyName = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.SHORT).format(now);
+        String imageFileName = "SELFIE_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);
         File image = File.createTempFile(
@@ -86,7 +90,7 @@ public class DailySelfieActivity extends ListActivity {
 
         // Save a DailySelfieItem object with the file details
         mDailySelfieItem = new DailySelfieItem(image.getAbsolutePath(),
-            imageFileName);
+                prettyName);
 
         // return generated File object
         return image;

@@ -3,4 +3,8 @@
     <string name="action_camera">Take a Selfie!</string>
     <string name="file_creation_error">There was an error while creating the image file.</string>
     <string name="image_description">Selfie Image</string>
+    <string name="title_activity_preview_image">PreviewImageActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
