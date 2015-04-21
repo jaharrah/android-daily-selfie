@@ -10,6 +10,8 @@ import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
@@ -70,6 +72,19 @@ public class DailySelfieActivity extends ListActivity {
                 mDailySelfieItem = null;
             }
         }
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+
+        super.onListItemClick(l, v, position, id);
+        // Create an intent stating which Activity you would like to start
+        Intent intent = new Intent(this, PreviewImageActivity.class);
+        DailySelfieItem dailySelfieItem = mAdapter.getItem(position);
+        intent.putExtra(PreviewImageActivity.IMAGE_PATH, dailySelfieItem.getFullPhotoPath());
+
+        // Use the Intent to start Google Maps application using Activity.startActivity()
+        startActivity(intent);
     }
 
     private File createImageFile() throws IOException {

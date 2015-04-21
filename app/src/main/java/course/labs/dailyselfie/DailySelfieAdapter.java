@@ -93,24 +93,6 @@ public class DailySelfieAdapter extends BaseAdapter {
             // Inflate the View for this ToDoItem from todo_item.xml.
             convertView = LayoutInflater.from(mContext).inflate(R.layout.daily_selfie_item, parent, false);
 
-            /*
-            convertView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-
-                    // Create an intent stating which Activity you would like to start
-                    Intent intent = new Intent(mContext, PreviewImageActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.putExtra(PreviewImageActivity.IMAGE_PATH, dailySelfieItem.getFullPhotoPath());
-
-                    // Use the Intent to start Google Maps application using Activity.startActivity()
-                    mContext.startActivity(intent);
-
-                }
-            });
-            */
-
             viewHolder = new ViewHolder();
             viewHolder.imageName = (TextView) convertView.findViewById(R.id.imageName);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
@@ -132,8 +114,6 @@ public class DailySelfieAdapter extends BaseAdapter {
 
         // Display Image Name in TextView
         viewHolder.imageName.setText(dailySelfieItem.getImageFileName());
-
-        //viewHolder.imageView.setImage
 
         // Return the View you just created
         return convertView;

@@ -22,21 +22,6 @@ public class PreviewImageActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview_image);
 
-        ImageView previewImage = (ImageView) findViewById(R.id.previewImage);
-        previewImage.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-
-                // Create an intent stating which Activity you would like to start
-                Intent intent = new Intent(PreviewImageActivity.this, DailySelfieActivity.class);
-
-                // Use the Intent to start Google Maps application using Activity.startActivity()
-                startActivity(intent);
-
-            }
-        });
-
     }
 
     @Override
