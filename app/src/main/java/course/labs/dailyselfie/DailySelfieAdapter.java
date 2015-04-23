@@ -19,15 +19,21 @@ import java.util.List;
 
 public class DailySelfieAdapter extends BaseAdapter {
 
-    private final List<DailySelfieItem> mItems = new ArrayList<DailySelfieItem>();
     private final Context mContext;
+    private final DailySelfieDataSource mDataSource;
+    private final List<DailySelfieItem> mItems;
 
     private static final String TAG = "DailySelfie";
 
     public DailySelfieAdapter(Context context) {
 
         mContext = context;
+        mDataSource = new DailySelfieDataSource(mContext);
 
+        // load the items
+        mDataSource.open();
+        mItems = mDataSource.getAllSelfies();
+        mDataSource.close();
     }
 
     // Add a ToDoItem to the adapter
@@ -36,6 +42,9 @@ public class DailySelfieAdapter extends BaseAdapter {
     public void add(DailySelfieItem item) {
 
         mItems.add(item);
+        mDataSource.open();
+        mDataSource.createSelfie(item.getImageFileName(), item.getFullPhotoPath());
+        mDataSource.close();
         notifyDataSetChanged();
 
     }
@@ -44,9 +53,17 @@ public class DailySelfieAdapter extends BaseAdapter {
 
     public void clear() {
 
+        // todo: implement deleteAll in data source
         mItems.clear();
+        //mDataSource.deleteAllSelfies();
         notifyDataSetChanged();
 
+    }
+
+    // Delete the TodoItem passed in
+
+    public void delete(DailySelfieItem item) {
+        // todo: implement delete in data source and adapter
     }
 
     // Returns the number of ToDoItems

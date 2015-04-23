@@ -4,8 +4,13 @@ public class DailySelfieItem {
 
     private String mFullPhotoPath = new String();
     private String mImageFileName = new String();
+    private long mId;
+
+    public DailySelfieItem() {
+    }
 
     public DailySelfieItem(String mFullPhotoPath, String mImageFileName) {
+        this();
         this.mFullPhotoPath = mFullPhotoPath;
         this.mImageFileName = mImageFileName;
     }
@@ -24,5 +29,13 @@ public class DailySelfieItem {
 
     public void setImageFileName(String mImageFileName) {
         this.mImageFileName = mImageFileName;
+    }
+
+    public long getId() {
+        return mId;
+    }
+
+    public void setId(long mId) {
+        this.mId = mId;
     }
 }
