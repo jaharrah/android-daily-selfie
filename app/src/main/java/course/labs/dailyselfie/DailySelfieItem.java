@@ -38,4 +38,12 @@ public class DailySelfieItem {
     public void setId(long mId) {
         this.mId = mId;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return (o != null &&
+                o instanceof DailySelfieItem &&
+                ((DailySelfieItem)o).getFullPhotoPath().equals(getFullPhotoPath()));
+
+    }
 }

@@ -19,17 +19,17 @@
                 android:contentDescription="@string/image_description"
                 android:layout_weight="4"
                 android:minWidth="80dp"
+                android:adjustViewBounds="true"
                 android:focusable="false"/>
 
             <TextView
                 android:id="@+id/imageName"
                 android:layout_width="wrap_content"
                 android:layout_height="110dp"
-                android:text="SELFIE_JPEG_041615_09022014_931939"
                 android:layout_weight="6"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:focusable="false"/>
 
         </TableRow>

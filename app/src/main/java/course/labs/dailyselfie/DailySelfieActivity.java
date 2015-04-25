@@ -1,8 +1,10 @@
 package course.labs.dailyselfie;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.PendingIntent;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -14,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,6 +52,34 @@ public class DailySelfieActivity extends ListActivity {
         // Attach the adapter to this ListActivity's ListView
         this.getListView().setAdapter(mAdapter);
 
+        this.getListView().setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+                                           int arg2, long arg3) {
+
+                final int listItemPosition = arg2;
+
+                new AlertDialog.Builder(DailySelfieActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Delete Selfie")
+                        .setMessage("Are you sure you want to delete this selfie?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                // delete the selected item
+                                DailySelfieItem dailySelfieItem = mAdapter.getItem(listItemPosition);
+                                mAdapter.delete(dailySelfieItem);
+                            }
+
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
+                return true;
+            }
+        });
+
         // set up the notification for taking the next selfie
         initializeNotifications();
 
@@ -68,6 +99,24 @@ public class DailySelfieActivity extends ListActivity {
         switch (item.getItemId()) {
             case R.id.action_camera:
                 dispatchTakePictureIntent();
+                return true;
+            case R.id.action_delete_all:
+                new AlertDialog.Builder(DailySelfieActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Delete All Selfies")
+                        .setMessage("Are you sure you want to delete all selfies?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                // delete the selected item
+                                mAdapter.deleteAllSelfies();
+                            }
+
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -100,13 +149,14 @@ public class DailySelfieActivity extends ListActivity {
         startActivity(intent);
     }
 
+
+
     private File createImageFile() throws IOException {
         // Create an image file name
         Date now = new Date();
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(now);
-        // todo: store name as simple value for sorting purposes, and prettify
-        // todo: on list item display
-        String prettyName = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.SHORT).format(now);
+
+        String prettyName = SimpleDateFormat.getDateTimeInstance(SimpleDateFormat.LONG, SimpleDateFormat.MEDIUM).format(now);
         String imageFileName = "SELFIE_" + timeStamp + "_";
         File storageDir = Environment.getExternalStoragePublicDirectory(
                 Environment.DIRECTORY_PICTURES);

@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.SimpleAdapter;
@@ -50,20 +51,23 @@ public class DailySelfieAdapter extends BaseAdapter {
     }
 
     // Clears the list adapter of all items.
+    public void deleteAllSelfies() {
 
-    public void clear() {
-
-        // todo: implement deleteAll in data source
         mItems.clear();
-        //mDataSource.deleteAllSelfies();
+        mDataSource.open();
+        mDataSource.deleteAllSelfies();
+        mDataSource.close();
         notifyDataSetChanged();
 
     }
 
     // Delete the TodoItem passed in
-
     public void delete(DailySelfieItem item) {
-        // todo: implement delete in data source and adapter
+        mItems.remove(item);
+        mDataSource.open();
+        mDataSource.deleteSelfie(item);
+        mDataSource.close();
+        notifyDataSetChanged();
     }
 
     // Returns the number of ToDoItems
@@ -114,6 +118,16 @@ public class DailySelfieAdapter extends BaseAdapter {
             viewHolder.imageName = (TextView) convertView.findViewById(R.id.imageName);
             viewHolder.imageView = (ImageView) convertView.findViewById(R.id.imageView);
 
+            ViewTreeObserver vto = viewHolder.imageView.getViewTreeObserver();
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                public boolean onPreDraw() {
+                    viewHolder.imageView.getViewTreeObserver().removeOnPreDrawListener(this);
+
+                    // Populate ImageView with scaled bitmap from full photo path
+                    setPic(viewHolder.imageView, dailySelfieItem.getFullPhotoPath());                    return true;
+                }
+            });
+
             // store the holder with the view.
             convertView.setTag(viewHolder);
 
@@ -126,11 +140,11 @@ public class DailySelfieAdapter extends BaseAdapter {
         // corresponds to the user interface elements defined
         // in the layout file
 
-        // Populate ImageView with scaled bitmap from full photo path
-        setPic(viewHolder.imageView, dailySelfieItem.getFullPhotoPath());
-
         // Display Image Name in TextView
         viewHolder.imageName.setText(dailySelfieItem.getImageFileName());
+
+        // Populate ImageView with scaled bitmap from full photo path
+        setPic(viewHolder.imageView, dailySelfieItem.getFullPhotoPath());
 
         // Return the View you just created
         return convertView;
@@ -150,9 +164,12 @@ public class DailySelfieAdapter extends BaseAdapter {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        //int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-        // todo: imageView height/width is 0 here.  Where should this happen?
-        int scaleFactor = 5;
+        int scaleFactor;
+        if(targetH == 0 && targetW == 0) {
+            scaleFactor = 5;
+        } else {
+            scaleFactor = Math.min(photoW / targetW, photoH / targetH);
+        }
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;

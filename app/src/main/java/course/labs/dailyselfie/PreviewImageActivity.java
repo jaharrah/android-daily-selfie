@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 
 
@@ -26,7 +27,22 @@ public class PreviewImageActivity extends Activity {
 
         mPreviewImage = (ImageView) findViewById(R.id.previewImage);
 
-        setPic(mPreviewImage, getIntent().getStringExtra(IMAGE_PATH));
+        mPreviewImage.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight,
+                                       int oldBottom) {
+                // its possible that the layout is not complete in which case
+                // we will get all zero values for the positions, so ignore the event
+                if (left == 0 && top == 0 && right == 0 && bottom == 0) {
+                    return;
+                }
+
+                // Do what you need to do with the height/width since they are now set
+                setPic(mPreviewImage, getIntent().getStringExtra(IMAGE_PATH));
+            }
+        });
+
     }
 
     private void setPic(ImageView imageView, String fullPhotoPath) {
@@ -42,9 +58,7 @@ public class PreviewImageActivity extends Activity {
         int photoH = bmOptions.outHeight;
 
         // Determine how much to scale down the image
-        //int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
-        // todo: imageView height/width is 0 here.  Where should this happen?
-        int scaleFactor = 1;
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
 
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;

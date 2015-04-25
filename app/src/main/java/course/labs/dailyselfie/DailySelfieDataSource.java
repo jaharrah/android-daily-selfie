@@ -52,6 +52,11 @@ public class DailySelfieDataSource {
                 + " = " + id, null);
     }
 
+    public void deleteAllSelfies() {
+        System.out.println("Deleted all Selfies");
+        database.delete(DailySelfieSQLiteHelper.TABLE_PICTURES, null, null);
+    }
+
     public List<DailySelfieItem> getAllSelfies() {
         List<DailySelfieItem> selfies = new ArrayList<DailySelfieItem>();
 
