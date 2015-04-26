@@ -124,7 +124,9 @@ public class DailySelfieAdapter extends BaseAdapter {
                     viewHolder.imageView.getViewTreeObserver().removeOnPreDrawListener(this);
 
                     // Populate ImageView with scaled bitmap from full photo path
-                    setPic(viewHolder.imageView, dailySelfieItem.getFullPhotoPath());                    return true;
+                    setPic(viewHolder.imageView, dailySelfieItem.getFullPhotoPath());
+
+                    return true;
                 }
             });
 

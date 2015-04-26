@@ -61,9 +61,9 @@ public class DailySelfieActivity extends ListActivity {
 
                 new AlertDialog.Builder(DailySelfieActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Delete Selfie")
-                        .setMessage("Are you sure you want to delete this selfie?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.title_delete_selfie)
+                        .setMessage(R.string.message_delete_selfie)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -74,7 +74,7 @@ public class DailySelfieActivity extends ListActivity {
                             }
 
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(R.string.no, null)
                         .show();
                 return true;
             }
@@ -103,9 +103,9 @@ public class DailySelfieActivity extends ListActivity {
             case R.id.action_delete_all:
                 new AlertDialog.Builder(DailySelfieActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Delete All Selfies")
-                        .setMessage("Are you sure you want to delete all selfies?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        .setTitle(R.string.title_delete_all_selfies)
+                        .setMessage(R.string.message_delete_all_selfies)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -115,7 +115,7 @@ public class DailySelfieActivity extends ListActivity {
                             }
 
                         })
-                        .setNegativeButton("No", null)
+                        .setNegativeButton(R.string.no, null)
                         .show();
                 return true;
             default:
